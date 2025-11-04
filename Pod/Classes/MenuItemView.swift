@@ -111,7 +111,7 @@ open class MenuItemView: UIView {
     
     fileprivate func initLabel() -> UILabel {
         let label = UILabel(frame: .zero)
-        label.numberOfLines = 1
+        label.numberOfLines = 0
         label.textAlignment = .center
         label.isUserInteractionEnabled = true
         label.translatesAutoresizingMaskIntoConstraints = false
