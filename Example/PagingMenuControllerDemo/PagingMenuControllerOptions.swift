@@ -6,7 +6,7 @@
 //  Copyright © 2016 kitasuke. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import PagingMenuController
 
 struct MenuItemUsers: MenuItemViewCustomizable {}

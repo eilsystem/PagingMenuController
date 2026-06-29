@@ -15,8 +15,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "PagingMenuController",
-            path: "Pod/Classes"
+            name: "PagingMenuController"
         )
     ],
     swiftLanguageVersions: [

@@ -1,10 +1,6 @@
 ![](https://raw.githubusercontent.com/wiki/kitasuke/PagingMenuController/images/logo.png)
 
 [![CI Status](http://img.shields.io/travis/kitasuke/PagingMenuController.svg?style=flat)](https://travis-ci.org/kitasuke/PagingMenuController)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/kitasuke/PagingMenuController)
-[![Version](https://img.shields.io/cocoapods/v/PagingMenuController.svg?style=flat)](http://cocoapods.org/pods/PagingMenuController)
-[![License](https://img.shields.io/cocoapods/l/PagingMenuController.svg?style=flat)](http://cocoapods.org/pods/PagingMenuController)
-[![Platform](https://img.shields.io/cocoapods/p/PagingMenuController.svg?style=flat)](http://cocoapods.org/pods/PagingMenuController)
 ![Swift 3.0.x](https://img.shields.io/badge/Swift-3.0.x-orange.svg)
 
 This library is inspired by [PageMenu](https://github.com/uacaps/PageMenu)
@@ -323,61 +319,27 @@ Xcode 8.0+
 
 ## Installation
 
-### CocoaPods
-PagingMenuController is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+### Swift Package Manager
 
-```ruby
-source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '9.0'
-use_frameworks!
+Add PagingMenuController as a package dependency in Xcode using:
 
-pod "PagingMenuController"
-
-post_install do |installer|
- installer.pods_project.targets.each do |target|
-   target.build_configurations.each do |config|
-     config.build_settings['SWIFT_VERSION'] = '3.0'
-   end
- end
-end
+```
+https://github.com/kitasuke/PagingMenuController.git
 ```
 
-Then, run `pod install`
+Or add it to your `Package.swift`:
 
-In case you haven't installed CocoaPods yet, run the following command
-
-```ruby
-$ gem install cocoapods
+```swift
+.package(url: "https://github.com/kitasuke/PagingMenuController.git", from: "2.3.1")
 ```
-
-### Carthage
-PagingMenuController is available through [Carthage](https://github.com/Carthage/Carthage).
-
-To install PagingMenuController into your Xcode project using Carthage, specify it in your Cartfile:
-
-```ruby
-github "kitasuke/PagingMenuController"
-```
-
-Then, run `carthage update --toolchain com.apple.dt.toolchain.Swift_3_0`
-
-You can see `Carthage/Build/iOS/PagingMenuController.framework` now, so drag and drop it to `Linked Frameworks and Libraries` in General menu tab with your project.
-Add the following script to `New Run Script Phase` in Build Phases menu tab.
-```ruby
-/usr/local/bin/carthage copy-frameworks
-```
-
-Also add the following script in `Input Files`
-```ruby
-$(SRCROOT)/Carthage/Build/iOS/PagingMenuController.framework
-```
-
-In case you haven't installed Carthage yet, download the latest pkg from [Carthage](https://github.com/Carthage/Carthage/releases)
 
 ### Manual
 
-Copy all the files in `Pod/Classes` directory into your project.
+Copy all the files in `Sources/PagingMenuController` directory into your project.
+
+## Example
+
+Open `Example/PagingMenuControllerDemo.xcodeproj`, then select the `PagingMenuControllerDemo` or `PagingMenuControllerDemo2` scheme before running on a simulator.
 
 ## License
 
