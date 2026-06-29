@@ -73,8 +73,8 @@ class RootViewControoler: UIViewController {
             }
         }
         
-        addChildViewController(pagingMenuController)
+        addChild(pagingMenuController)
         view.addSubview(pagingMenuController.view)
-        pagingMenuController.didMove(toParentViewController: self)
+        pagingMenuController.didMove(toParent: self)
     }
 }

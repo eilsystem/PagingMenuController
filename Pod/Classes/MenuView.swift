@@ -173,6 +173,7 @@ open class MenuView: UIScrollView {
         isDirectionalLockEnabled = true
         decelerationRate = UIScrollView.DecelerationRate(rawValue: menuOptions.deceleratingRate)
         scrollsToTop = false
+        contentInsetAdjustmentBehavior = .never
         translatesAutoresizingMaskIntoConstraints = false
     }
     

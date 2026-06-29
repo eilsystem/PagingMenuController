@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "PagingMenuController",
     platforms: [
-        .iOS(.v9)
+        .iOS("17.7")
     ],
     products: [
         .library(

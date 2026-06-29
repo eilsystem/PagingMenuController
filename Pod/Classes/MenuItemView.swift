@@ -204,7 +204,7 @@ open class MenuItemView: UIView {
             descriptionWidthConstraint,
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: verticalMargin),
             titleLabel.bottomAnchor.constraint(equalTo: descriptionLabel.topAnchor, constant: 0),
-            descriptionLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: verticalMargin),
+            descriptionLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -verticalMargin),
             titleLabel.heightAnchor.constraint(equalToConstant: titleLabelSize.height),
             ])
     }
@@ -319,7 +319,7 @@ extension MenuItemView {
             itemWidth = labelWidth(widthMode, estimatedSize: estimatedLabelSize(label))
         }
         
-        let itemHeight = floor(estimatedLabelSize(label).height)
+        let itemHeight = ceil(estimatedLabelSize(label).height)
         return CGSize(width: itemWidth + horizontalMargin * 2, height: itemHeight)
     }
     
