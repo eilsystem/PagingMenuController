@@ -13,11 +13,11 @@ private enum Section {
     case all(content: AllContent)
     case menuView(content: MenuViewContent)
     case menuController(content: MenuControllerContent)
-    
-    fileprivate enum AllContent: Int { case standard, segmentedControl, infinite }
+
+    fileprivate enum AllContent: Int { case standard, segmentedControl, infinite, infiniteMultiline, navigationController, infiniteMultilineNavigationController }
     fileprivate enum MenuViewContent: Int { case underline, roundRect }
     fileprivate enum MenuControllerContent: Int { case standard }
-    
+
     init?(indexPath: IndexPath) {
         switch ((indexPath as NSIndexPath).section, (indexPath as NSIndexPath).row) {
         case (0, let row):
@@ -32,7 +32,7 @@ private enum Section {
         default: return nil
         }
     }
-    
+
     var options: PagingMenuControllerCustomizable {
         let options: PagingMenuControllerCustomizable
         switch self {
@@ -44,6 +44,12 @@ private enum Section {
                 options = PagingMenuOptions2()
             case .infinite:
                 options = PagingMenuOptions3()
+            case .infiniteMultiline:
+                options = PagingMenuOptions7()
+            case .navigationController:
+                options = PagingMenuOptions8()
+            case .infiniteMultilineNavigationController:
+                options = PagingMenuOptions9()
             }
         case .menuView(let content):
             switch content {
@@ -60,6 +66,16 @@ private enum Section {
         }
         return options
     }
+
+    var embedsPagingMenuInNavigationController: Bool {
+        switch self {
+        case .all(let content):
+            return content == .navigationController ||
+                content == .infiniteMultilineNavigationController
+        default:
+            return false
+        }
+    }
 }
 
 class RootViewController: UITableViewController {
@@ -67,14 +83,15 @@ class RootViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let cell = sender as? UITableViewCell,
             let indexPath = tableView.indexPath(for: cell),
             let sectionType = Section(indexPath: indexPath),
             let viewController = segue.destination as? PagingMenuViewController else { return }
-        
+
         viewController.title = cell.textLabel?.text
         viewController.options = sectionType.options
+        viewController.embedsPagingMenuInNavigationController = sectionType.embedsPagingMenuInNavigationController
     }
 }

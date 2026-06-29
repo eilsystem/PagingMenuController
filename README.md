@@ -341,6 +341,8 @@ Copy all the files in `Sources/PagingMenuController` directory into your project
 
 Open `Example/PagingMenuControllerDemo.xcodeproj`, then select the `PagingMenuControllerDemo` or `PagingMenuControllerDemo2` scheme before running on a simulator.
 
+`PagingMenuControllerDemo` includes nested navigation examples that embed `PagingMenuController` in a child `UINavigationController`.
+
 ## License
 
 PagingMenuController is available under the MIT license. See the [LICENSE](https://github.com/kitasuke/PagingMenuController/blob/master/LICENSE) file for more info.
