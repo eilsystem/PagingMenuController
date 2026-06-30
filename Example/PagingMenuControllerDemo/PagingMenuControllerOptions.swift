@@ -257,14 +257,94 @@ struct PagingMenuOptions8: PagingMenuControllerCustomizable {
 }
 
 struct PagingMenuOptions9: PagingMenuControllerCustomizable {
-    private let options = PagingMenuOptions7()
+    private let shopNewsViewController = NavigationExampleListViewController(
+        title: "Items Topics",
+        items: ["Items Topic 1", "Items Topic 2", "Items Topic 3"])
+    private let campaignViewController = NavigationExampleListViewController(
+        title: "Sample Notices",
+        items: ["Sample Notice 1", "Sample Notice 2", "Sample Notice 3"])
+    private let popupShopViewController = NavigationExampleListViewController(
+        title: "Basic Items",
+        items: ["Basic Item 1", "Basic Item 2", "Basic Item 3"])
+    private let giftsViewController = NavigationExampleListViewController(
+        title: "Suggested Sets",
+        items: ["Suggested Set 1", "Suggested Set 2", "Suggested Set 3"])
+    private let coordinationViewController = NavigationExampleListViewController(
+        title: "Menu Details",
+        items: ["Menu Detail 1", "Menu Detail 2", "Menu Detail 3"])
 
     var componentType: ComponentType {
-        return options.componentType
+        return .all(menuOptions: MenuOptions(), pagingControllers: pagingControllers)
     }
     var lazyLoadingPage: LazyLoadingPage {
-        return options.lazyLoadingPage
+        return .three
     }
+    private var pagingControllers: [UIViewController] {
+        return [
+            shopNewsViewController,
+            campaignViewController,
+            popupShopViewController,
+            giftsViewController,
+            coordinationViewController
+        ]
+    }
+
+    struct MenuOptions: MenuViewCustomizable {
+        var displayMode: MenuDisplayMode {
+            return .infinite(widthMode: .flexible, scrollingMode: .pagingEnabled)
+        }
+        var focusMode: MenuFocusMode {
+            return .underline(height: 3, color: DemoMenuColor.mainColor, horizontalPadding: 20, verticalPadding: 0)
+        }
+        var height: CGFloat {
+            return 60
+        }
+        var itemsOptions: [MenuItemViewCustomizable] {
+            return [MenuItemShopNews(), MenuItemUsers(), MenuItemPopupShops(), MenuItemGifts(), MenuItemCoordination()]
+        }
+        var animationDuration: TimeInterval {
+            return 0.1
+        }
+    }
+
+    struct MenuItemShopNews: MenuItemViewCustomizable {
+        var displayMode: MenuItemDisplayMode {
+            let title = MenuItemText(text: "アイテム\nトピック", selectedColor: DemoMenuColor.mainColor, font: UIFont.systemFont(ofSize: 15), selectedFont: UIFont.boldSystemFont(ofSize: 15))
+            return .text(title: title)
+        }
+    }
+
+    struct MenuItemUsers: MenuItemViewCustomizable {
+        var displayMode: MenuItemDisplayMode {
+            let title = MenuItemText(text: "サンプル一覧・\nお知らせ", selectedColor: DemoMenuColor.mainColor, font: UIFont.systemFont(ofSize: 15), selectedFont: UIFont.boldSystemFont(ofSize: 15))
+            return .text(title: title)
+        }
+    }
+
+    struct MenuItemPopupShops: MenuItemViewCustomizable {
+        var displayMode: MenuItemDisplayMode {
+            let title = MenuItemText(text: "基本情報\nアイテム", selectedColor: DemoMenuColor.mainColor, font: UIFont.systemFont(ofSize: 15), selectedFont: UIFont.boldSystemFont(ofSize: 15))
+            return .text(title: title)
+        }
+    }
+
+    struct MenuItemGifts: MenuItemViewCustomizable {
+        var displayMode: MenuItemDisplayMode {
+            let title = MenuItemText(text: "おすすめ\n設定集", selectedColor: DemoMenuColor.mainColor, font: UIFont.systemFont(ofSize: 15), selectedFont: UIFont.boldSystemFont(ofSize: 15))
+            return .text(title: title)
+        }
+    }
+
+    struct MenuItemCoordination: MenuItemViewCustomizable {
+        var displayMode: MenuItemDisplayMode {
+            let title = MenuItemText(text: "メニュー\n詳細へ", selectedColor: DemoMenuColor.mainColor, font: UIFont.systemFont(ofSize: 15), selectedFont: UIFont.boldSystemFont(ofSize: 15))
+            return .text(title: title)
+        }
+    }
+}
+
+private struct DemoMenuColor {
+    static let mainColor = UIColor.blue
 }
 
 private final class NavigationExampleListViewController: UITableViewController {

@@ -12,16 +12,16 @@ import PagingMenuController
 class PagingMenuViewController: UIViewController {
     var options: PagingMenuControllerCustomizable!
     var embedsPagingMenuInNavigationController = false
+    private var pagingMenuController: PagingMenuController?
+    private var didEmbedPagingMenuInNavigationController = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
         let pagingMenuController = self.children.first as! PagingMenuController
+        self.pagingMenuController = pagingMenuController
         pagingMenuController.setup(options)
-        if embedsPagingMenuInNavigationController {
-            embedPagingMenuInNavigationController(pagingMenuController)
-        }
         pagingMenuController.onMove = { state in
             switch state {
             case let .willMoveController(menuController, previousMenuController):
@@ -44,8 +44,18 @@ class PagingMenuViewController: UIViewController {
         }
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        guard embedsPagingMenuInNavigationController,
+            !didEmbedPagingMenuInNavigationController,
+            let pagingMenuController = pagingMenuController else { return }
+
+        embedPagingMenuInNavigationController(pagingMenuController)
+    }
+
     private func embedPagingMenuInNavigationController(_ pagingMenuController: PagingMenuController) {
-        guard let containerView = view.superview else { return }
+        guard let containerView = pagingMenuController.view.superview else { return }
 
         pagingMenuController.title = "Child NavigationController"
         pagingMenuController.willMove(toParent: nil)
@@ -53,7 +63,7 @@ class PagingMenuViewController: UIViewController {
         pagingMenuController.removeFromParent()
 
         let navigationController = UINavigationController(rootViewController: pagingMenuController)
-        navigationController.navigationBar.isTranslucent = false
+        configureChildNavigationBar(navigationController)
 
         addChild(navigationController)
         containerView.addSubview(navigationController.view)
@@ -65,5 +75,27 @@ class PagingMenuViewController: UIViewController {
             navigationController.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
             ])
         navigationController.didMove(toParent: self)
+        didEmbedPagingMenuInNavigationController = true
+    }
+
+    private func configureChildNavigationBar(_ navigationController: UINavigationController) {
+        navigationController.view.backgroundColor = UIColor.white
+
+        let navigationBar = navigationController.navigationBar
+        navigationBar.isTranslucent = false
+        navigationBar.tintColor = UIColor.black
+        navigationBar.barTintColor = UIColor.white
+        navigationBar.backgroundColor = UIColor.white
+
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor.white
+        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        appearance.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+
+        navigationBar.standardAppearance = appearance
+        navigationBar.compactAppearance = appearance
+        navigationBar.scrollEdgeAppearance = appearance
+        navigationBar.compactScrollEdgeAppearance = appearance
     }
 }
